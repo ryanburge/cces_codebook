@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CCES Cumulative File Codebook</title>
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5em;
+}
+
+.header p {
+    margin: 5px 0;
+    font-size: 1.1em;
+    opacity: 0.95;
+}
+
+.info-box {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.info-box h3 {
+    margin-top: 0;
+    color: #1976D2;
+}
+
+.section {
+    background-color: white;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.section h2 {
+    color: #667eea;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background-color: #667eea;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.variable-name {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    color: #764ba2;
+}
+
+.values {
+    font-size: 0.95em;
+    color: #333;
+}
+
+.notes {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+}
+
+.function-box {
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.function-box h3 {
+    margin-top: 0;
+    color: #f57c00;
+}
+
+.function-box code {
+    background-color: #ffe0b2;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "Courier New", monospace;
+}
+
+.footer {
+    text-align: center;
+    color: #666;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "Courier New", monospace;
+    color: #c7254e;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>CCES Cumulative File Codebook</h1>
+<p><strong>Years:</strong> 2006-2024</p>
+<p><strong>Total Observations:</strong> 691,956</p>
+<p><strong>Last Updated:</strong> February 17, 2026</p>
+</div>
+
+<div class="info-box">
+<h3>About This Dataset</h3>
+<p>The Cooperative Election Study (CCES) is a large-scale national survey conducted annually. This cumulative file combines data from 2006-2024, standardizing variable names and coding across years for longitudinal analysis.</p>
+</div>
+
+<div class="function-box">
+<h3>Custom Functions for Analysis</h3>
+<p>The following custom functions are available for recoding variables:</p>
+<ul>
+<li><code>cces_trad(df, var)</code> - Recode into detailed religious traditions</li>
+<li><code>cces_attend()</code> - Recode attendance categories</li>
+<li><code>cces_pid3()</code> / <code>cces_pid7()</code> - Recode party ID</li>
+<li><code>cces_race()</code> - Recode race categories</li>
+<li><code>cces_educ()</code> - Recode education levels</li>
+<li><code>cces_inc()</code> - Recode income brackets</li>
+</ul>
+<p><strong>Example usage with weighting:</strong></p>
+<p><code>cces %>% group_by(pid3) %>% mean_ci(outcome, wt = weight)</code></p>
+</div>
+
+<div class="section"><h2>Demographics</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">weight</td><td>Survey weight</td><td class="values">Continuous</td><td class="notes">Use for all weighted analyses. Variable name: commonweight in original files</td></tr>
+<tr><td class="variable-name">race</td><td>Race/ethnicity</td><td class="values">1=White, 2=Black, 3=Hispanic, 4=Asian, 5=Native American, 6=Mixed, 7=Other, 8=Middle Eastern</td><td class="notes">Use cces_race() function for recoding</td></tr>
+<tr><td class="variable-name">gender</td><td>Gender</td><td class="values">1=Male, 2=Female, 3=Non-binary (recent years), 4=Other (recent years)</td><td class="notes">Variable name: gender4 in original files</td></tr>
+<tr><td class="variable-name">age</td><td>Age in years</td><td class="values">Continuous (18-99+)</td><td class="notes">Calculated as year - birthyr</td></tr>
+<tr><td class="variable-name">birthyr</td><td>Birth year</td><td class="values">Continuous</td><td class="notes">Used to calculate age</td></tr>
+<tr><td class="variable-name">state</td><td>State of residence</td><td class="values">Character (full state names)</td><td class="notes">Converted from numeric codes using states.csv lookup</td></tr>
+<tr><td class="variable-name">abbr</td><td>State abbreviation</td><td class="values">Character (2-letter codes)</td><td class="notes">Added from abbr.csv lookup</td></tr></tbody></table></div><div class="section"><h2>Political Variables</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">pid3</td><td>Party ID (3-category)</td><td class="values">1=Democrat, 2=Republican, 3=Independent, 4=Other/Not sure</td><td class="notes">Use cces_pid3() function for recoding</td></tr>
+<tr><td class="variable-name">pid7</td><td>Party ID (7-category)</td><td class="values">1=Strong Democrat, 2=Not very strong Democrat, 3=Lean Democrat, 4=Independent, 5=Lean Republican, 6=Not very strong Republican, 7=Strong Republican, 8=Not sure</td><td class="notes">Use cces_pid7() function for recoding</td></tr>
+<tr><td class="variable-name">ideo5</td><td>Ideology (5-point)</td><td class="values">1=Very liberal, 2=Liberal, 3=Moderate, 4=Conservative, 5=Very conservative, 6=Not sure</td><td class="notes"></td></tr></tbody></table></div><div class="section"><h2>Socioeconomic Variables</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">educ</td><td>Education level</td><td class="values">1=No HS, 2=High school graduate, 3=Some college, 4=2-year degree, 5=4-year degree, 6=Post-grad</td><td class="notes">Use cces_educ() function for recoding</td></tr>
+<tr><td class="variable-name">income</td><td>Family income</td><td class="values">1=Less than $10k, 2=$10k-$20k, 3=$20k-$30k, 4=$30k-$40k, 5=$40k-$50k, 6=$50k-$60k, 7=$60k-$70k, 8=$70k-$80k, 9=$80k-$100k, 10=$100k-$120k, 11=$120k-$150k, 12=$150k+, 97=Prefer not to say</td><td class="notes">Use cces_inc() function for recoding. Variable name: faminc_new</td></tr>
+<tr><td class="variable-name">marital_status</td><td>Marital status</td><td class="values">1=Married, 2=Separated, 3=Divorced, 4=Widowed, 5=Single/Never married, 6=Domestic partnership</td><td class="notes">Variable name: marstat in original files</td></tr></tbody></table></div><div class="section"><h2>Family Variables</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">havekids</td><td>Has children under 18</td><td class="values">1=Yes, 2=No</td><td class="notes">Variable name: child18. Available in recent years only</td></tr>
+<tr><td class="variable-name">numkids</td><td>Number of children</td><td class="values">0-10+</td><td class="notes">Variable name: numchildren. Available in recent years only</td></tr></tbody></table></div><div class="section"><h2>Immigration</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">imm</td><td>Immigrant status</td><td class="values">1=Born outside US, non-citizen; 2=Born outside US, naturalized; 3=Born outside US, parents non-citizens; 4=Born in US, at least one parent born outside US; 5=Born in US, both parents born in US</td><td class="notes">Variable name: immstat in original files</td></tr></tbody></table></div><div class="section"><h2>Religion - General Measures</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">religion</td><td>Religious tradition (Pew)</td><td class="values">1=Protestant, 2=Catholic, 3=Mormon, 4=Orthodox Christian, 5=Other Christian, 6=Non-Christian, 7=Nothing in particular, 8=Atheist, 9=Agnostic</td><td class="notes">Use cces_trad() for detailed recoding. Variable name: religpew</td></tr>
+<tr><td class="variable-name">pew_bornagain</td><td>Born again/evangelical</td><td class="values">1=Yes, 2=No</td><td class="notes">Asked of Protestants only</td></tr>
+<tr><td class="variable-name">pew_importance</td><td>Importance of religion</td><td class="values">1=Very important, 2=Somewhat important, 3=Not too important, 4=Not at all important</td><td class="notes">Variable name: pew_religimp in original files</td></tr>
+<tr><td class="variable-name">pew_attendance</td><td>Religious service attendance</td><td class="values">1=More than once a week, 2=Once a week, 3=Once or twice a month, 4=A few times a year, 5=Seldom, 6=Never</td><td class="notes">Use cces_attend() for recoding. Variable name: pew_churatd</td></tr>
+<tr><td class="variable-name">pew_prayers</td><td>Prayer frequency</td><td class="values">1=Several times a day, 2=Once a day, 3=A few times a week, 4=Once a week, 5=A few times a month, 6=Seldom, 7=Never</td><td class="notes">Variable name: pew_prayer in original files</td></tr></tbody></table></div><div class="section"><h2>Religion - Protestant Denominations</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">protestant</td><td>Protestant denomination</td><td class="values">1=Baptist, 2=Methodist, 3=Nondenominational, 4=Lutheran, 5=Presbyterian, 6=Pentecostal, 7=Episcopalian, 8=Church of Christ, 9=Congregational, 10=Holiness, 11=Reformed, 12=Adventist, 13=Jehovah's Witness, 99=Something else</td><td class="notes">Variable name: religpew_protestant. Asked only if religion=1</td></tr>
+<tr><td class="variable-name">baptist</td><td>Baptist denomination</td><td class="values">1=Southern Baptist Convention, 2=American Baptist Churches in USA, 3=National Baptist Convention, 4=Progressive Baptist Convention, 5=Independent Baptist, 6=Baptist General Conference, 7=Baptist Missionary Association, 8=Conservative Baptist Assoc. of America, 9=Free Will Baptist, 10=General Association of Regular Baptists, 99=Other Baptist</td><td class="notes">Variable name: religpew_baptist. Subset of Protestant</td></tr>
+<tr><td class="variable-name">methodist</td><td>Methodist</td><td class="values">1=United Methodist Church, 2=Free Methodist Church, 3=African Methodist Episcopal, 4=African Methodist Episcopal Zion, 5=Christian Methodist Episcopal Church, 99=Other Methodist Church</td><td class="notes">Variable name: religpew_methodist</td></tr>
+<tr><td class="variable-name">nondenom</td><td>Non-denominational</td><td class="values">1=Nondenominational evangelical, 2=Nondenominational fundamentalist, 3=Nondenominational charismatic, 4=Interdenominational, 5=Community church, 99=Other</td><td class="notes">Variable name: religpew_nondenom</td></tr>
+<tr><td class="variable-name">lutheran</td><td>Lutheran</td><td class="values">1=Evangelical Lutheran Church in America (ELCA), 2=Lutheran Church Missouri Synod, 3=Lutheran Church Wisconsin Synod, 99=Other Lutheran Church</td><td class="notes">Variable name: religpew_lutheran</td></tr>
+<tr><td class="variable-name">presbyterian</td><td>Presbyterian</td><td class="values">1=Presbyterian Church USA, 2=Presbyterian Church in America, 3=Associate Reformed Presbyterian, 4=Cumberland Presbyterian Church, 5=Orthodox Presbyterian, 6=Evangelical Presbyterian Church, 99=Other Presbyterian Church</td><td class="notes">Variable name: religpew_presby</td></tr>
+<tr><td class="variable-name">pentecostal</td><td>Pentecostal</td><td class="values">1=Assemblies of God, 2=Church of God Cleveland TN, 3=Four Square Gospel, 4=Pentecostal Church of God, 5=Pentecostal Holiness Church, 6=Church of God in Christ, 7=Church of God of the Apostolic Faith, 8=Assembly of Christian Churches, 9=Apostolic Christian, 99=Other Pentecostal Church</td><td class="notes">Variable name: religpew_pentecost</td></tr>
+<tr><td class="variable-name">episcopal</td><td>Episcopal/Anglican</td><td class="values">1=Episcopal Church in the USA, 2=Anglican Church (Church of England), 3=Anglican Orthodox Church, 4=Reformed Episcopal Church, 99=Other Episcopalian or Anglican Church</td><td class="notes">Variable name: religpew_episcop</td></tr>
+<tr><td class="variable-name">christian</td><td>Christian (unspecified)</td><td class="values">1=Church of Christ, 2=Disciples of Christ, 3=Christian Churches and Churches of Christ, 99=Other Christian church</td><td class="notes">Variable name: religpew_christian</td></tr>
+<tr><td class="variable-name">congregational</td><td>Congregational/UCC</td><td class="values">1=United Church of Christ, 2=Conservative Congregational Christian, 3=National Association of Congregational Christians, 99=Other Congregational</td><td class="notes">Variable name: religpew_congreg</td></tr>
+<tr><td class="variable-name">holiness</td><td>Holiness</td><td class="values">1=Church of the Nazarene, 2=Wesleyan Church, 3=Free Methodist Church, 4=Christian and Missionary Alliance, 5=Church of God (Anderson Indiana), 6=Salvation Army/American Rescue workers, 99=Other Holiness</td><td class="notes">Variable name: religpew_holiness</td></tr>
+<tr><td class="variable-name">reformed</td><td>Reformed</td><td class="values">1=Reformed Church in America, 2=Christian Reformed Church, 99=Other Reformed</td><td class="notes">Variable name: religpew_reformed</td></tr>
+<tr><td class="variable-name">adventist</td><td>Adventist</td><td class="values">1=Seventh Day Adventist, 2=Church of God General Conference, 3=Advent Christian, 99=Other Adventist</td><td class="notes">Variable name: religpew_advent</td></tr></tbody></table></div><div class="section"><h2>Religion - Other Traditions</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">catholic</td><td>Catholic</td><td class="values">1=Roman Catholic Church, 2=National Polish Catholic Church, 3=Greek-rite Catholic, 4=Armenian Catholic, 5=Old Catholic, 99=Other Catholic</td><td class="notes">Variable name: religpew_catholic. Asked only if religion=2</td></tr>
+<tr><td class="variable-name">mormon</td><td>Mormon/LDS</td><td class="values">1=The Church of Jesus Christ of Latter-day Saints, 2=Community of Christ, 99=Other Mormon</td><td class="notes">Variable name: religpew_mormon. Asked only if religion=3</td></tr>
+<tr><td class="variable-name">orthodox</td><td>Orthodox Christian</td><td class="values">1=Greek Orthodox, 2=Russian Orthodox, 3=Orthodox Church in America, 4=Armenian Orthodox, 5=Eastern Orthodox, 6=Serbian Orthodox, 99=Other Orthodox</td><td class="notes">Variable name: religpew_orthodox. Asked only if religion=4</td></tr>
+<tr><td class="variable-name">jewish</td><td>Jewish denomination</td><td class="values">1=Reform, 2=Conservative, 3=Orthodox, 4=Reconstructionist, 99=Other</td><td class="notes">Variable name: religpew_jewish. Asked only if religion=6</td></tr>
+<tr><td class="variable-name">muslim</td><td>Muslim tradition</td><td class="values">1=Sunni, 2=Shia, 3=Nation of Islam (Black Muslim), 99=Other Muslim</td><td class="notes">Variable name: religpew_muslim. Asked only if religion=6</td></tr>
+<tr><td class="variable-name">buddhist</td><td>Buddhist tradition</td><td class="values">1=Theravada (Vipassana) Buddhism, 2=Mahayana (Zen) Buddhism, 3=Vajrayana (Tibetan) Buddhism, 99=Other Buddhist</td><td class="notes">Variable name: religpew_buddhist. Asked only if religion=6</td></tr>
+<tr><td class="variable-name">hindu</td><td>Hindu</td><td class="values">1=Vaishnava Hinduism, 2=Shaivite Hinduism, 3=Shaktism Hinduism, 99=Other Hindu</td><td class="notes">Variable name: religpew_hindu. Asked only if religion=6</td></tr></tbody></table></div><div class="section"><h2>Survey Administration</h2><table><thead><tr><th>Variable</th><th>Description</th><th>Values</th><th>Notes</th></tr></thead><tbody><tr><td class="variable-name">year</td><td>Survey year</td><td class="values">2006-2024</td><td class="notes">Year of survey administration</td></tr></tbody></table></div>
+
+<div class="section">
+<h2>Important Notes</h2>
+
+<h3>Weighting</h3>
+<p>Always use the <code>weight</code> variable (commonweight) for population estimates. This weight adjusts for sampling design and non-response.</p>
+
+<h3>Missing Data</h3>
+<ul>
+<li><strong>Income:</strong> Code 97 = "Prefer not to say"</li>
+<li><strong>Religious denominations:</strong> Variables are NA when not applicable (e.g., baptist is NA for non-Protestants)</li>
+<li><strong>Family variables:</strong> <code>havekids</code> and <code>numkids</code> only available in recent survey years</li>
+<li><strong>Denomination codes:</strong> Most denomination variables use 99 for "Other" or "Something else"</li>
+</ul>
+
+<h3>Sample Sizes by Year</h3>
+<p>To see weighted sample sizes by year, run:</p>
+<p><code>cces %>% count(year, wt = weight)</code></p>
+
+<h3>Religious Tradition Coding</h3>
+<p>The <code>religion</code> variable follows Pew Research Center categories. For more detailed religious tradition recoding (e.g., Evangelical Protestant, Mainline Protestant, Black Protestant), use the <code>cces_trad()</code> function which combines multiple variables.</p>
+</div>
+
+<div class="footer">
+<p><strong>Citation:</strong> Cooperative Election Study Cumulative File (2006-2024)</p>
+<p>Prepared by Ryan Burge, Washington University in St. Louis</p>
+<p>Danforth Center on Religion and Politics</p>
+</div>
+
+</body>
+</html>
+
